@@ -8,5 +8,5 @@ WORKDIR /var
 RUN git clone https://github.com/gbenselum/whyansible.git
 RUN asciidoctor whyansible.adoc
 RUN dnf install httpd
-RUN mv whyansible.html /var/www/index.html
+RUN mv /var/whyansible/whyansible.html /var/www/index.html
 RUN systemctl start httpd
