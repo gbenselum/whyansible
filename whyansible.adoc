@@ -1,0 +1,16 @@
+= Why Ansible
+Gabriel Benselum <gbenselum@gmail.com>
+v0.1, 2021-07-18
+
+Greetings reader, this is the first chapter of "Why Ansible Series". You might find this chapter and maybe others on my Github Repo 
+https://github.com/gbenselum/whyansible[WhyAnsible]
+
+[source,bash]
+ ______________
+< Why Ansible? >
+ --------------
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\
+                ||----w |
+                ||     ||
