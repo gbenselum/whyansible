@@ -6,7 +6,10 @@ RUN gem install  asciidoctor-pdf
 #
 WORKDIR /var
 RUN git clone https://github.com/gbenselum/whyansible.git
-# RUN asciidoctor whyansible.adoc
+RUN asciidoctor ./whyansible/whyansible.adoc 
 RUN dnf install httpd -y
-# RUN mv /var/whyansible/whyansible.html /var/www/index.html
-# RUN systemctl start httpd
+RUN mv /var/whyansible/whyansible.html /var/www/index.html
+#
+EXPOSE 80
+#
+CMD [“/usr/sbin/httpd”, “-D”, “FOREGROUND”]
