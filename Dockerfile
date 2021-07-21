@@ -9,4 +9,4 @@ RUN git clone https://github.com/gbenselum/whyansible.git
 # RUN asciidoctor whyansible.adoc
 RUN dnf install httpd -y
 # RUN mv /var/whyansible/whyansible.html /var/www/index.html
-RUN systemctl start httpd
+# RUN systemctl start httpd
