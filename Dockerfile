@@ -8,7 +8,7 @@ WORKDIR /var
 RUN git clone https://github.com/gbenselum/whyansible.git
 RUN asciidoctor ./whyansible/whyansible.adoc 
 RUN dnf install httpd -y
-RUN mv /var/whyansible/whyansible.html /var/www/index.html
+RUN mv /var/whyansible/whyansible.html /var/www/html/index.html
 EXPOSE 80
 #CMD [“/usr/sbin/httpd”, “-D”, “FOREGROUND”]
-CMD [“httpd”]
+RUN /usr/sbin/httpd 
