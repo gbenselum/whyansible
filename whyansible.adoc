@@ -36,26 +36,22 @@ As being developed by modules (and now collections), every brand or technology i
 It does not have a complex or new syntax. It uses YAML and JSON to interact with the "human operator". You talk to ansible with YAML code, and ansible will answer with JSON, making your life easy. There is no need to parse the replies from ansible, killing the need for awk or grep. If you are not familiar with either JSON or YAML we will discuss those later.
 
 *FUN:*
-Writting ansible playbooks instead of scripts or another nanming is chosen to take out any technicism, to avoid overcome fear from non-dev ITspecialist. Even in some versions, playbooks will reply with cowsay! For any cow hater, you could always disable those in ansible.cfg with ANSIBLE_NOCOWS=1 
+Writting ansible playbooks instead of scripts or another nanming is chosen to take out any technicism, to avoid overcome fear from non-dev ITspecialist. Most IT Specialist usually automate with BASH, but is hard to parse commands, so when Ansible reply in JSON format, we will be able to get everything i variables. Also,  in some versions, playbooks will reply with _cowsay_  . For any cow hater, you could always disable those in ansible.cfg with ANSIBLE_NOCOWS=1 
 
 *DUMB:*
 As many people avoid IA or IA assisted technologies, Ansible is more like hiring extra muscle for your IT department, not replace your crew. Ansible does not take any decisions for you. Ansible does not get written by itself, or comes with pre written playbooks to automate your enviroment. Good news are, there are plenty public repos with loads of ansible playbooks, a great well mantained documentation, and there is a full galaxy of roles and collections (pun intended!).
 
 *Infra testing ready:*
-
 A lot of infra specialist do not test their jobs, they usually make changes directly on production servers, the great source of human error. Most of the reasons are time constraint or complexity. Automation and Ansible provides a "write once, run anywhere" solution for Sysadmin, or from now on SRE/DEVOPS Specialists. 
 
 *Self documented*
-
 Ansible needs no external documentation if its properly written, because is required for every playbook, and every task to be explained. This is very important both for the understanding of the Playbook, and for further analysis and debugging, because each tasks name will be printed on the output when we run a Playbook.
 
 
 *Now The Fun begins!*
+
 [quote]
 Disclaimer, all commands are tested on Fedora 34, they might work in any rpm like distros. Also all commands are intented as user with sudo.
-
-
-
 
 *First Steps*
 First you need to install ansible in your Control Node or server. This is the host who will command all the automated hosts, from now on we will call them remote nodes, but for this example, we will run with localhost.
@@ -108,7 +104,7 @@ This first task, has only two arguments, as you might find those on the ansible 
         name: podman
         state: present
   
-Now our second task will start podman service, not the fat and ugly daemon like cousin Docker.
+Now our second task will start podman service, not the fat and ugly daemon like cousin Docker. 
 
 [source, YML]
     - name: start podman service
@@ -116,7 +112,7 @@ Now our second task will start podman service, not the fat and ugly daemon like 
         name: podman
         state: started
 
-Now our host is ready to spin up some new pods and containers. For this example, we will be pulling a grafana image from Dockerhub, and provide access to the port 3000.
+Now our host is ready to spin up some new pods or containers. For this example, we will be pulling a grafana container image from Dockerhub, and bind the container port to the host port 3000, and starting at the same time.
 
 [source, YML]
     - name: Start grafana server as a container from dockerhub
