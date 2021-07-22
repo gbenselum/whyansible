@@ -12,31 +12,31 @@ v0.1, 2021-07-18
                 ||----w |
                 ||     ||
 
-This small chapter will be covering some basic stuff about Ansible and a fast recipe to kickstart your ansible journey. As I used to say in most of my workshops and demos,   . Ansible was conceived as a simple and modular pseudo-language for infrastructure automation in the year 2012 by Ansible INC, and later acquired by Red Hat. It's open source and has a great and welcoming community.
+This small chapter will be covering some basic stuff about Ansible and a fast recipe to kickstart your ansible journey. As I used to say in most of my workshops and demos, Ansible was conceived as a simple and modular pseudo-language for infrastructure automation in the year 2012 by Ansible INC, and later acquired by Red Hat. It's open source and has a great and welcoming community.
 
 *First some etymology about Ansible:*
 
-The Ansible term was created by Ursula Le Guin more than 60 years ago and was massively adopted later by "Ender's Game" futuristic series by Orson Scott as a device for instant "light speed communications" across very long distances in near time or realtime. So Ansible is a synonym of speed. Ansible is intended to be a fun project, easy to understand, easy to develop, and easy to adopt by any Sysadmin. Written in Python, the coolest language for non-dev specialists. 
+The Ansible term was created by Ursula Le Guin more than 60 years ago and was massively adopted later by "Ender's Game" futuristic series by Orson Scott as a device for instant "light speed communications" across very long distances in near time or real time. So Ansible is a synonym of speed. Ansible is intended to be a fun project, easy to understand, easy to develop, and easy to adopt by any Sysadmin. Written in Python, the coolest language for non-dev specialists. 
 
-*As the community defines, it has 3 major benefits:*
+*As the Red Hat defines, it has 3 major benefits:*
 
 *Simple:*
 All playbooks are executed in linear execution, any loops or any other recursive and complex syntaxes are supported, but is encouraged to newcomers to avoid those. Your firsts playbooks (and more) will be simple and straightforward.
 Variables, loops, handlers, and a lot of stuff are supported as any language, but first playbooks should avoid any of those, and will not be covered in this chapter.
 
 *Agentless:*
-One of the most demanding tasks and sources of attack surface are the annoying agents, like for example backup agents, which are mostly outdated software. No one wants to add more processing or sleeping agents on their servers, so ansible only uses SSH on Unix like enviroments, WINRM on Microsoft Servers, Netconf is used for networking boxes and last but not least APIs. 
+One of the most demanding tasks and sources of attack surface are the annoying agents, like for example backup agents, which are usually get outdated rather quicly. No one wants to add more processing or sleeping agents on their servers, so ansible only uses SSH on Unix like environments, WINRM on Microsoft Servers, Netconf is used for networking boxes and last but not least APIs. 
 
 *Powerfull:*
-As being developed by modules (and now collections), every brand or technology is developed separately from the main components of Ansible, giving flexibility to test and create every module by themselves. Sorta like breaking the monolith into microservices, we break the automation tool in several (3387 at the time this was written) modules. Now Ansible is being delivered by collections, a new way of wrapping roles, modules and playbooks.
+As being developed by modules (and now collections), every brand or technology is developed separately from the main components of Ansible, giving a great flexibility to test and create every module by themselves. Sorta like breaking the monolith into microservices, we break the automation tool in several (3387 at the time this writting) modules. Now Ansible is being delivered by collections, a new way of wrapping roles, modules and playbooks.
 
 *From my point of view, the main advantages of ansible are:*
 
 *Pseudolanguage:*
-It does not have a complex or new syntax. It uses YAML and JSON to interact with the "human operator". You talk to ansible with YAML code, and ansible will answer with JSON, making your life easy. There is no need to parse the replies from ansible, killing the need for awk or grep. If you are not familiar with either JSON or YAML we will discuss those later.
+It does not have a complex or different syntax. It uses YAML and JSON to interact with the "human operator". You talk to ansible with YAML code, and ansible will answer with JSON, making your life easy. There is no need to parse the replies from ansible, killing the need for awk or grep. If you are not familiar with either JSON or YAML we will discuss those later.
 
 *FUN:*
-Writting ansible playbooks instead of scripts or another nanming is chosen to take out any technicism, to avoid overcome fear from non-dev ITspecialist. Most IT Specialist usually automate with BASH, but is hard to parse commands, so when Ansible reply in JSON format, we will be able to get everything i variables. Also,  in some versions, playbooks will reply with _cowsay_  . For any cow hater, you could always disable those in ansible.cfg with ANSIBLE_NOCOWS=1 
+Writing ansible playbooks instead of scripts or another nanming is chosen to take out any technicism, to avoid overcome fear from non-dev ITspecialist. Most IT Specialist usually automate with BASH, but is hard to parse commands, so when Ansible reply in JSON format, we will be able to get everything encoded as variables. Also,  in some versions, playbooks will reply with _cowsay_  . For any cow hater, you could always disable those in ansible.cfg with ANSIBLE_NOCOWS=1 
 
 *DUMB:*
 As many people avoid IA or IA assisted technologies, Ansible is more like hiring extra muscle for your IT department, not replace your crew. Ansible does not take any decisions for you. Ansible does not get written by itself, or comes with pre written playbooks to automate your enviroment. Good news are, there are plenty public repos with loads of ansible playbooks, a great well mantained documentation, and there is a full galaxy of roles and collections (pun intended!).
@@ -62,27 +62,27 @@ Also let's install ansile-lint from Python Installer. More about lint and testin
 
  pip3 install ansible-lint
 
-Then we will be installing the collection for containers management (containers.podman).
+Then we will be installing the collection for containers management (containers.podman) with the ansible-galaxy command, this will gather for us a public collection.
 
  ansible-galaxy collection install containers.podman
 
 And that's it. Now we need to start working on our first playbook.
 
 
-*Writting Our first Ansible Playbook* 
+*Writting Our first Ansible Playbook*
 
 Ansible could run commands from the terminal, but the most powerfull way to interact with Ansible is using Playbooks. Playbooks are the scripts for Ansible, Written in YAML (YAML Ain't Markup Language ). Ansible playbooks could be understand as Grocery store lists. First you have the directions and information for the whole market, or header, and then you have the tasks or the sections for every corner of the market, or plays and tasks. 
 
 [quote, How a Playbook works from Ansible Documentation]
 A playbook runs in order from top to bottom. Within each play, tasks also run in order from top to bottom. Playbooks with multiple ‘plays’ can orchestrate multi-machine deployments, running one play on your webservers, then another play on your database servers, then a third play on your network infrastructure, and so on. 
 
-In other words, our playbook will be running from top to botom tasks,
+In other words, our playbook will be running from top to botom tasks.
 Our playbook will be running the following steps:
 
-Install podman on localhost 
-Start podman service
-Pull a container from Docker Hub 
-Start the container
+* Install podman on localhost 
+* Start podman service
+* Pull a container from a registry, in this case, Docker Hub
+* Start the container
 
 *Syntax:*
 With your favorite IDE create a file, in this case we will name it test.yml.
