@@ -10,4 +10,5 @@ RUN asciidoctor ./whyansible/whyansible.adoc
 RUN dnf install httpd -y
 RUN mv /var/whyansible/whyansible.html /var/www/index.html
 EXPOSE 80
-CMD [“/usr/sbin/httpd”, “-D”, “FOREGROUND”]
+#CMD [“/usr/sbin/httpd”, “-D”, “FOREGROUND”]
+CMD [“httpd”]
