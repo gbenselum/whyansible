@@ -1,0 +1,19 @@
+---
+- hosts: localhost
+  become: yes
+  tasks:
+    - name: Install podman in rpm distros
+      ansible.builtin.yum:
+        name: podman
+        state: present
+    - name: start podman service
+      service:
+        name: podman
+        state: started
+    - name: Pull grafana container from dockerhub, and then bind the service on port 3000
+      containers.podman.podman_container:
+        name: container
+        image: docker.io/grafana/grafana
+        ports: 3000:3000
+        state: started
+...
